@@ -65,6 +65,12 @@ Located in `/scripts/`:
 
 The timing files are designed to work with audio from [EveryAyah.com](https://everyayah.com). Ensure you use the matching audio quality (kbps) for accurate synchronization.
 
+## Project Status
+
+This project is a work in progress. The timing files and scripts require refinement and additional testing. In shaa Allah, once the [Quran Life App](https://github.com/QuranLife) reaches a stable state, I plan to return and improve this work further.
+
+If you find these resources beneficial for your Quran application or Islamic project, please remember us in your duas.
+
 ## License
 
 These timing files and scripts are provided free for use in Quran applications and Islamic educational projects.
