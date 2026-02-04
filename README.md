@@ -217,7 +217,7 @@ https://everyayah.com/data/Alafasy_64kbps/002282.mp3
 
 ## Project Status
 
-This project is a work in progress. The timing files and scripts require refinement and additional testing. In shaa Allah, once the [Quran Life App](https://play.google.com/apps/testing/com.quranlife.app) reaches a stable state, I plan to return and improve this work further.
+This project is a work in progress. The timing files and scripts require refinement and additional testing. In shaa Allah, once the [Quran Life App](https://play.google.com/store/apps/details?id=com.quranlife.app) reaches a stable state, I plan to return and improve this work further.
 
 If you find these resources beneficial for your Quran application or Islamic project, please remember us in your duas.
 
