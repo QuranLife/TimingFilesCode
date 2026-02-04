@@ -236,6 +236,7 @@ Please credit: **QuranLife App (github.com/QuranLife)**
 - [OpenAI Whisper](https://github.com/openai/whisper) - Speech recognition model
 - [Vosk](https://alphacephei.com/vosk/) - Offline speech recognition
 - [EveryAyah.com](https://everyayah.com) - Quran audio source
+- [Quran.com API](https://quran.com) - Uthmani Quran text data
 - [quran-align (cpfair)](https://github.com/cpfair/quran-align) - Inspiration and methodology
 
 ## Contact
