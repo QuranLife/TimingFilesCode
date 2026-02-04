@@ -29,10 +29,8 @@ MODELS_DIR = SCRIPT_DIR / "models"
 VOSK_MODEL_DIR = MODELS_DIR / "vosk-model-ar-0.22-linto-1.1.0"
 VOSK_MODEL_URL = "https://alphacephei.com/vosk/models/vosk-model-ar-0.22-linto-1.1.0.zip"
 
-# FFmpeg path
-ffmpeg_path = r"C:\Users\Lapto\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
-if ffmpeg_path not in os.environ.get("PATH", ""):
-    os.environ["PATH"] = ffmpeg_path + os.pathsep + os.environ.get("PATH", "")
+# FFmpeg must be installed and in system PATH
+# Install via: winget install ffmpeg (Windows) or apt install ffmpeg (Linux)
 
 # Global models
 _whisper_model = None
@@ -98,10 +96,9 @@ def get_vosk_model():
 def convert_to_wav(mp3_path):
     """Convert MP3 to WAV for Vosk (16kHz mono)"""
     wav_path = mp3_path.replace('.mp3', '_temp.wav')
-    ffmpeg_exe = os.path.join(ffmpeg_path, "ffmpeg.exe")
 
     subprocess.run([
-        ffmpeg_exe, "-y", "-i", mp3_path,
+        "ffmpeg", "-y", "-i", mp3_path,
         "-ar", "16000", "-ac", "1", "-f", "wav", wav_path
     ], capture_output=True)
 
@@ -110,10 +107,9 @@ def convert_to_wav(mp3_path):
 
 def get_audio_duration_ms(audio_path):
     """Get audio duration in milliseconds"""
-    ffprobe_path = os.path.join(ffmpeg_path, "ffprobe.exe")
     try:
         result = subprocess.run(
-            [ffprobe_path, "-v", "error", "-show_entries", "format=duration",
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
              "-of", "default=noprint_wrappers=1:nokey=1", audio_path],
             capture_output=True, text=True, timeout=10
         )
@@ -591,8 +587,11 @@ def test_dual_engine():
             short = sum(1 for s in segs if s[3] - s[2] < 100)
             print(f"  Short segments (<100ms): {short}")
 
-            # Compare with V1
-            with open(r"C:\test\PlayGround\QA5\assets\quran_data\Alafasy_128kbps.json", 'r') as f:
+            # Compare with existing timing (if available)
+            v1_path = SCRIPT_DIR.parent / "timing_files" / "Mishary_Alafasy_64kbps.json"
+            if not v1_path.exists():
+                continue
+            with open(v1_path, 'r') as f:
                 v1_data = json.load(f)
 
             v1_segs = next((v['segments'] for v in v1_data

@@ -17,10 +17,8 @@ if sys.stdout:
     except:
         pass
 
-# Add FFmpeg to PATH
-ffmpeg_path = r"C:\Users\Lapto\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
-if ffmpeg_path not in os.environ.get("PATH", ""):
-    os.environ["PATH"] = ffmpeg_path + os.pathsep + os.environ.get("PATH", "")
+# FFmpeg must be installed and in system PATH
+# Install via: winget install ffmpeg (Windows) or apt install ffmpeg (Linux)
 
 import whisper
 
@@ -315,14 +313,15 @@ if __name__ == "__main__":
     output_file = os.path.join(script_dir, "Yasser_Ad-Dussary_128kbps_aligned.json")
 
     # Load verse text from quran data
-    quran_path = r"C:\test\PlayGround\QA5\assets\quran_data\quran_uthmani.json"
+    # Set QURAN_JSON_PATH environment variable or place quran_uthmani.json in scripts folder
+    quran_path = os.environ.get("QURAN_JSON_PATH", os.path.join(script_dir, "quran_uthmani.json"))
 
     # For 2:282, we need the verse text
     verse_text = get_verse_text(2, 282, quran_path)
 
     if not verse_text:
         print("Could not load verse text. Using fallback...")
-        # You can paste the verse text here as fallback
+        print("Set QURAN_JSON_PATH or place quran_uthmani.json in scripts folder")
         verse_text = ""
 
     if verse_text:

@@ -19,10 +19,8 @@ if sys.stdout:
     except:
         pass
 
-# Add FFmpeg to PATH
-ffmpeg_path = r"C:\Users\Lapto\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
-if ffmpeg_path not in os.environ.get("PATH", ""):
-    os.environ["PATH"] = ffmpeg_path + os.pathsep + os.environ.get("PATH", "")
+# FFmpeg must be installed and in system PATH
+# Install via: winget install ffmpeg (Windows) or apt install ffmpeg (Linux)
 
 
 def get_google_word_timestamps(audio_path):
@@ -170,10 +168,9 @@ def generate_hybrid_timing(audio_path, verse_text, surah, ayah, use_google=True)
     import subprocess
 
     # Get audio duration
-    ffprobe_path = os.path.join(ffmpeg_path, "ffprobe.exe")
     try:
         result = subprocess.run(
-            [ffprobe_path, "-v", "error", "-show_entries", "format=duration",
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
              "-of", "default=noprint_wrappers=1:nokey=1", audio_path],
             capture_output=True, text=True, timeout=10
         )
@@ -338,27 +335,29 @@ def test_hybrid():
         segs = timing['segments']
         print(f"\nGenerated {len(segs)} segments")
 
-        # Compare with V1
-        with open(r"C:\test\PlayGround\QA5\assets\quran_data\Alafasy_128kbps.json", 'r') as f:
-            v1_data = json.load(f)
+        # Compare with existing timing file (if available)
+        v1_path = Path(__file__).parent.parent / "timing_files" / "Mishary_Alafasy_64kbps.json"
+        if v1_path.exists():
+            with open(v1_path, 'r') as f:
+                v1_data = json.load(f)
 
-        v1_segs = None
-        for v in v1_data:
-            if v['surah'] == surah and v['ayah'] == ayah:
-                v1_segs = v['segments']
-                break
+            v1_segs = None
+            for v in v1_data:
+                if v['surah'] == surah and v['ayah'] == ayah:
+                    v1_segs = v['segments']
+                    break
 
-        if v1_segs:
-            print(f"\nComparison with V1 ({len(v1_segs)} segments):")
-            print(f"{'Point':<8} | {'New':>10} | {'V1':>10} | {'Diff':>8}")
-            print("-" * 45)
-            for pct in [0, 0.25, 0.5, 0.75, 1.0]:
-                new_idx = min(int(len(segs) * pct), len(segs) - 1)
-                v1_idx = min(int(len(v1_segs) * pct), len(v1_segs) - 1)
-                new_start = segs[new_idx][2]
-                v1_start = v1_segs[v1_idx][2]
-                diff = new_start - v1_start
-                print(f"{int(pct*100):>3}%     | {new_start:>10} | {v1_start:>10} | {diff:>+8}")
+            if v1_segs:
+                print(f"\nComparison with existing ({len(v1_segs)} segments):")
+                print(f"{'Point':<8} | {'New':>10} | {'V1':>10} | {'Diff':>8}")
+                print("-" * 45)
+                for pct in [0, 0.25, 0.5, 0.75, 1.0]:
+                    new_idx = min(int(len(segs) * pct), len(segs) - 1)
+                    v1_idx = min(int(len(v1_segs) * pct), len(v1_segs) - 1)
+                    new_start = segs[new_idx][2]
+                    v1_start = v1_segs[v1_idx][2]
+                    diff = new_start - v1_start
+                    print(f"{int(pct*100):>3}%     | {new_start:>10} | {v1_start:>10} | {diff:>+8}")
 
 
 if __name__ == "__main__":

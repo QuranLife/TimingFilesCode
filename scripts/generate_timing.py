@@ -8,10 +8,8 @@ import json
 import sys
 import os
 
-# Add FFmpeg to PATH for this session
-ffmpeg_path = r"C:\Users\Lapto\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
-if ffmpeg_path not in os.environ.get("PATH", ""):
-    os.environ["PATH"] = ffmpeg_path + os.pathsep + os.environ.get("PATH", "")
+# FFmpeg must be installed and in system PATH
+# Install via: winget install ffmpeg (Windows) or apt install ffmpeg (Linux)
 
 def generate_word_timings(audio_path, output_path=None, model_size="base"):
     """

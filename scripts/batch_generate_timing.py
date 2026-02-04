@@ -27,10 +27,8 @@ if sys.stdout:
     except:
         pass
 
-# Add FFmpeg to PATH
-ffmpeg_path = r"C:\Users\Lapto\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
-if ffmpeg_path not in os.environ.get("PATH", ""):
-    os.environ["PATH"] = ffmpeg_path + os.pathsep + os.environ.get("PATH", "")
+# FFmpeg must be installed and in system PATH
+# Install via: winget install ffmpeg (Windows) or apt install ffmpeg (Linux)
 
 import whisper
 
@@ -75,7 +73,10 @@ SURAH_VERSES = {
 SCRIPT_DIR = Path(__file__).parent
 AUDIO_CACHE_DIR = SCRIPT_DIR / "audio_cache"
 OUTPUT_DIR = SCRIPT_DIR / "output"
-QURAN_JSON_PATH = Path(r"C:\test\PlayGround\QA5\assets\quran_data\quran_uthmani.json")
+
+# Quran text JSON - download from: https://api.quran.com/api/v4/quran/verses/uthmani
+# Or use environment variable QURAN_JSON_PATH
+QURAN_JSON_PATH = Path(os.environ.get("QURAN_JSON_PATH", SCRIPT_DIR / "quran_uthmani.json"))
 
 # Global Whisper model (loaded once)
 _whisper_model = None
@@ -143,10 +144,9 @@ def find_best_match(whisper_word, verse_words, current_pos, lookahead=4):
 def get_audio_duration_ms(audio_path):
     """Get audio duration in milliseconds using ffprobe"""
     import subprocess
-    ffprobe_path = os.path.join(ffmpeg_path, "ffprobe.exe")
     try:
         result = subprocess.run(
-            [ffprobe_path, "-v", "error", "-show_entries", "format=duration",
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
              "-of", "default=noprint_wrappers=1:nokey=1", audio_path],
             capture_output=True, text=True, timeout=10
         )

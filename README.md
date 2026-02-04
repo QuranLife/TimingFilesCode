@@ -39,12 +39,10 @@ Located in `/scripts/`:
 |--------|-------------|
 | `generate_timing.py` | Basic timing generator using Whisper |
 | `batch_generate_timing.py` | Batch processing for full Quran |
-| `dual_engine_timing.py` | Dual engine approach for better accuracy |
-| `hybrid_timing_generator.py` | Hybrid timing generator combining methods |
-| `forced_align_timing.py` | Forced alignment timing |
-| `convert_to_app_format.py` | Convert output to app-compatible format |
-| `merge_timing.py` | Merge timing files |
-| `inject_282_timing.py` | Inject timing for specific verses |
+| `dual_engine_timing.py` | Dual engine approach (Whisper + Vosk) |
+| `hybrid_timing_generator.py` | Hybrid timing generator (Whisper + Google) |
+| `forced_align_timing.py` | Forced alignment with verse text |
+| `convert_to_app_format.py` | Convert Whisper output to app format |
 
 ### Requirements
 
