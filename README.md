@@ -10,6 +10,7 @@ Located in `/timing_files/`:
 
 | File | Reciter | Audio Quality |
 |------|---------|---------------|
+| `Mishary_Alafasy_64kbps.json` | Mishary Rashid Alafasy | 64 kbps |
 | `Yasser_Ad-Dussary_128kbps.json` | Yasser Ad-Dossari | 128 kbps |
 | `MaherAlMuaiqly128kbps.json` | Maher Al-Muaiqly | 128 kbps |
 | `Abdullah_Basfar_192kbps.json` | Abdullah Basfar | 192 kbps |
